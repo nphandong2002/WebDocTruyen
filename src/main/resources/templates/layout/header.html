@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+</head>
+<body>
+
+<div layout:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-light navbar-inverse navbar-fixed-top">
+        <div class="container-fluid ">
+            <a class="navbar-brand mr-4" href="/"><img th:src="@{/img/logo.png}" alt height="48px"></a>
+            <ul class="navbar-nav mr-auto d-flex  flex-row">
+                <li class="nav-item dropdown dropdown-hover d-flex align-items-center p-3 btn-c">
+                    <i class="fas fa-align-justify m-2"></i> Thể Loại
+                </li>
+                <li class="nav-item dropdown dropdown-hover  d-flex align-items-center p-3 btn-c">
+                    Bảng xếp hạng
+                </li>
+            </ul>
+            <form  class="input-group w-50">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+            </form>
+            <ul class="navbar-nav mr-auto d-flex  flex-row form-login" th:if="${isLogin}">
+                <li class="nav-item dropdown dropdown-hover d-flex align-items-center p-3 btn-c" data-bs-toggle="modal" data-bs-target="#openFormLogin">
+                    Đăng Nhập
+                </li>
+                <li class="nav-item dropdown dropdown-hover  d-flex align-items-center p-3 btn-c">
+                    Đăng Ký
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="modal fade" th:if="${isLogin}" id="openFormLogin" tabindex="-1" aria-labelledby="openFormLogin" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="navbar-nav mr-auto d-flex  flex-row form-login" >
+                        <li class="nav-item dropdown dropdown-hover d-flex align-items-center btn-c-active  btn-c">
+                            <a class="nav-link">Đăng Nhập</a>
+                        </li>
+                        <li class="nav-item dropdown dropdown-hover  d-flex align-items-center  btn-c">
+                            <a class="nav-link">Đăng Ký</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="d-none" th:if="login" id ="opl"></div>
+                <div class="modal-body d-flex flex-row">
+                    <div id = "formLogin" class="w-100 p-3">
+                        <form class="form-signin" method="POST" th:action="@{/login}">
+                            <div th:if="${param.error}" class="alert alert-danger">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" class="alert alert-success">
+                                Bạn đã đăng xuất
+                            </div>
+                            <div class="form-group m-2">
+                                <label for="username">Tài Khoản</label>
+                                <input type="text" class="form-control" name="username" id="username"  placeholder="Nhập Tài Khoản">
+                            </div>
+                            <div class="form-group m-2">
+                                <label for="password">Mật Khẩu</label>
+                                <input type="password" class="form-control" id="password" name = "password" placeholder="Nhập Mật Khẩu">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mt-2">Đăng nhập</button>
+                        </form>
+                    </div>
+                    <div id = "formRegister" class="w-100 p-3 d-none">
+                        <form class="form-signin" method="POST" th:action="@{/register}">
+                            <div class="form-group m-2">
+                                <label for="usernameRegister">Tài Khoản</label>
+                                <input type="textt" class="form-control" id="usernameRegister" placeholder="Nhập Tài Khoản">
+                            </div>
+                            <div class="form-group m-2">
+                                <label for="passwordRegister">Mật Khẩu</label>
+                                <input type="password" class="form-control" id="passwordRegister" placeholder="Nhập Mật Khẩu">
+                            </div>
+                            <div class="form-group m-2">
+                                <label for="passwordCRegister">Nhập Lại Mật Khẩu</label>
+                                <input type="password" class="form-control" id="passwordCRegister" placeholder="Nhập Lại Mật Khẩu">
+                            </div>
+                            <button type="submit" class="btn btn-primary p-2 mt-2">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("opl") && document.querySelector(".form-login li").click();
+    </script>
+</div>
+
+</body>
+
+</html>

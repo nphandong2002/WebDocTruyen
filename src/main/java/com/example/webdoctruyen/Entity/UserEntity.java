@@ -1,11 +1,12 @@
 package com.example.webdoctruyen.Entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "web_truyen", catalog = "")
-public class UserEntity {
+public class  UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -22,6 +23,17 @@ public class UserEntity {
     @Basic
     @Column(name = "exp")
     private int exp;
+    @Basic
+    @Column(name = "role_id")
+    private int role_id;
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
+    }
 
     public int getId() {
         return id;
@@ -75,4 +87,17 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(id, email, password, name, exp);
     }
+    public UserEntity(){
+
+    }
+    public UserEntity(String email, String password, String name){
+        this.email = email;
+        this.password = password;
+        this.name =name;
+        this.role_id = 3;
+        this.exp = 0;
+    }
+    @ManyToOne
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    public RoleEntity roleEntity;
 }
